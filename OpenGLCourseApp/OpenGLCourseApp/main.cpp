@@ -34,11 +34,14 @@ static const char *vShader = "											\n\
 																		\n\
 layout (location = 0) in vec3 pos;										\n\
 																		\n\
+out vec4 vCol;															\n\
+																		\n\
 uniform mat4 model;														\n\
 																		\n\
 void main()																\n\
 {																		\n\
 	gl_Position = model * vec4(pos, 1.0);								\n\
+	vCol = vec4(clamp(pos, 0.0f, 1.0f), 1.0f);							\n\
 }																		\n\
 ";
 
@@ -46,11 +49,13 @@ void main()																\n\
 static const char *fShader = "											\n\
 #version 330															\n\
 																		\n\
+in vec4 vCol;															\n\
+																		\n\
 out vec4 colour;														\n\
 																		\n\
 void main()																\n\
 {																		\n\
-	colour = vec4(1.0, 0.0, 0.0, 1.0);									\n\
+	colour = vec4(vCol);												\n\
 }																		\n\
 ";
 
@@ -242,9 +247,9 @@ int main()
 		glUseProgram(shader);
 
 		glm::mat4 model(1.f);
-		model = glm::translate(model, glm::vec3(triOffset, 0.f, 0.f));
-		model = glm::rotate(model, currentAngle * toRadians, glm::vec3(0.f, 0.f, 1.f));
-		model = glm::scale(model, glm::vec3(currentSize, currentSize, 1.0f));
+		//model = glm::translate(model, glm::vec3(triOffset, 0.f, 0.f));
+		//model = glm::rotate(model, currentAngle * toRadians, glm::vec3(0.f, 0.f, 1.f));
+		model = glm::scale(model, glm::vec3(0.4f, 0.4f, 1.0f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
