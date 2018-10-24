@@ -23,6 +23,11 @@ float triIncrement = 0.005f;
 
 float currentAngle = 0.f;
 
+bool sizeDirection = true;
+float currentSize = 0.4f;
+float maxSize = 0.8f;
+float minSize = 0.1f;
+
 // Vertex Shader
 static const char *vShader = "											\n\
 #version 330															\n\
@@ -33,7 +38,7 @@ uniform mat4 model;														\n\
 																		\n\
 void main()																\n\
 {																		\n\
-	gl_Position = model * vec4(0.4 * pos.x, 0.4 * pos.y, pos.z, 1.0);	\n\
+	gl_Position = model * vec4(pos, 1.0);								\n\
 }																		\n\
 ";
 
@@ -216,6 +221,20 @@ int main()
 			currentAngle -= 360;
 		}
 
+		if (sizeDirection)
+		{
+			currentSize += 0.01f;
+		}
+		else
+		{
+			currentSize -= 0.01f;
+		}
+
+		if (currentSize >= maxSize || currentSize <= minSize)
+		{
+			sizeDirection = !sizeDirection;
+		}
+
 		// Clear the window
 		glClearColor(1.f, 1.f, 1.f, 1.f);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -225,6 +244,7 @@ int main()
 		glm::mat4 model(1.f);
 		model = glm::translate(model, glm::vec3(triOffset, 0.f, 0.f));
 		model = glm::rotate(model, currentAngle * toRadians, glm::vec3(0.f, 0.f, 1.f));
+		model = glm::scale(model, glm::vec3(currentSize, currentSize, 1.0f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 
