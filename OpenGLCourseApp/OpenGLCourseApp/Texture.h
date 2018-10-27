@@ -9,7 +9,9 @@ public:
 	Texture();
 	Texture(const char *fileLoc);
 
-	void LoadTexture();
+	bool LoadTexture();
+	bool LoadTextureA();
+
 	void UseTexture();
 	void ClearTexture();
 
@@ -20,6 +22,6 @@ private:
 	GLuint textureID;
 	int width, height, bitDepth;
 
-	char *fileLocation;
+	const char *fileLocation;
 };
 

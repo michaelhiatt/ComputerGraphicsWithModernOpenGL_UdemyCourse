@@ -4,7 +4,7 @@
 
 Mesh::Mesh()
 {
-	printf("Constructing a new Mesh\n");
+	//printf("Constructing a new Mesh\n");
 
 	VAO = 0;
 	VBO = 0;
@@ -21,7 +21,7 @@ Mesh::~Mesh()
 
 void Mesh::CreateMesh(GLfloat * vertices, unsigned int *indices, unsigned int numOfVertices, unsigned int numOfIndices)
 {
-	printf("Creating a new Mesh\n");
+	//printf("Creating a new Mesh\n");
 	indexCount = numOfIndices;
 
 	glGenVertexArrays(1, &VAO);
